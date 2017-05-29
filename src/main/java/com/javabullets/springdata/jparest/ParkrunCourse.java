@@ -2,18 +2,24 @@ package com.javabullets.springdata.jparest;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.TableGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ParkrunCourse {
 	@Id
-	@GeneratedValue
-	private Long id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
 	
 	private String courseName;
+	
+	@JsonIgnore
 	private String url;
 	private Long averageTime;
-	
+		
 	public String getCourseName() {
 		return courseName;
 	}
