@@ -5,9 +5,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+
 import org.springframework.http.HttpMethod;
 
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth)
@@ -22,10 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 	    http
           .authorizeRequests()
-            .antMatchers(HttpMethod.POST, "/rest/parkrunCourses/**").hasRole("ADMIN")
             .antMatchers("/rest/**").hasAnyRole("ADMIN","USER").and()
           .httpBasic()
             .and()
-		   .csrf().disable();
+		   .csrf().disable();		   
     }
 }
